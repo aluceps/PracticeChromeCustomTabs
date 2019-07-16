@@ -1,7 +1,9 @@
 package me.aluceps.practicechromecustomtabs
 
 import android.databinding.DataBindingUtil
+import android.net.Uri
 import android.os.Bundle
+import android.support.customtabs.CustomTabsIntent
 import android.support.v7.app.AppCompatActivity
 import me.aluceps.practicechromecustomtabs.databinding.ActivityMainBinding
 
@@ -14,6 +16,14 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding.webview.setOnClickListener {
+            launchCustomTabs(Uri.parse("https://www.google.com"))
         }
+    }
+
+    private fun launchCustomTabs(uri: Uri) {
+        val customTabsIntent = CustomTabsIntent.Builder()
+            .setShowTitle(true)
+            .build()
+        customTabsIntent.launchUrl(this, uri)
     }
 }
