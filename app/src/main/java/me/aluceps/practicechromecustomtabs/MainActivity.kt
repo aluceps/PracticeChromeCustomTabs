@@ -33,6 +33,10 @@ class MainActivity : AppCompatActivity() {
         binding.webview.setOnClickListener {
             launchCustomTabs(Uri.parse("https://www.google.com"))
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
         bindCustomTabsService()
     }
 
@@ -45,6 +49,8 @@ class MainActivity : AppCompatActivity() {
         val customTabsIntent = CustomTabsIntent.Builder(customTabsSession)
             .setShowTitle(true)
             .setToolbarColor(ContextCompat.getColor(this, R.color.colorPrimary))
+            .setStartAnimations(this, R.anim.abc_slide_in_bottom, R.anim.abc_slide_out_bottom)
+            .setExitAnimations(this, R.anim.abc_slide_in_bottom, R.anim.abc_slide_out_bottom)
             .enableUrlBarHiding()
             .build()
         customTabsIntent.intent.`package` = packageNameToBind
