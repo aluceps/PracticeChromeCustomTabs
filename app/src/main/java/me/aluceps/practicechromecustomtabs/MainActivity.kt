@@ -1,6 +1,7 @@
 package me.aluceps.practicechromecustomtabs
 
 import android.content.ComponentName
+import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.net.Uri
 import android.os.Bundle
@@ -54,6 +55,7 @@ class MainActivity : AppCompatActivity() {
             .enableUrlBarHiding()
             .build()
         customTabsIntent.intent.`package` = packageNameToBind
+        customTabsIntent.intent.putExtra(Intent.EXTRA_REFERRER, "https://www.yahoo.co.jp")
         customTabsIntent.launchUrl(this, uri)
     }
 
