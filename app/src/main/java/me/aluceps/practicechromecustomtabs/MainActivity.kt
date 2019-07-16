@@ -46,17 +46,17 @@ class MainActivity : AppCompatActivity() {
         super.onDestroy()
     }
 
-    private fun launchCustomTabs(uri: Uri) {
+    private fun launchCustomTabs(uri: Uri, referrer: Uri? = null) {
         val customTabsIntent = CustomTabsIntent.Builder(customTabsSession)
             .setShowTitle(true)
             .setToolbarColor(ContextCompat.getColor(this, R.color.colorPrimary))
-            .setStartAnimations(this, R.anim.abc_slide_in_bottom, R.anim.abc_slide_out_bottom)
-            .setExitAnimations(this, R.anim.abc_slide_in_bottom, R.anim.abc_slide_out_bottom)
             .enableUrlBarHiding()
             .build()
-        customTabsIntent.intent.`package` = packageNameToBind
-        customTabsIntent.intent.putExtra(Intent.EXTRA_REFERRER, "https://www.yahoo.co.jp")
-        customTabsIntent.launchUrl(this, uri)
+        customTabsIntent.also { tabs ->
+            tabs.intent.`package` = packageNameToBind
+            referrer?.let { tabs.intent.putExtra(Intent.EXTRA_REFERRER, it) }
+            tabs.launchUrl(this, uri)
+        }
     }
 
     private fun bindCustomTabsService() {
